@@ -1,0 +1,32 @@
+--Querys
+
+--Obtener sucursales por cada banco
+
+select sucursal.direccion, banco.nombre
+from banco inner join sucursal on (banco.id_banco = sucursal.id_banco)
+
+--Obtener registro de empleados para cada empleado
+
+select empleado.nombre, usuario.email, registro_empleado.horario_entrada, registro_empleado.horario_salida, registro_empleado.fecha_registro, sucursal.direccion AS sucursal
+from empleado left join registro_empleado on (empleado.rut_empleado = registro_empleado.rut_empleado)
+inner join sucursal on (sucursal.id_sucursal = empleado.id_sucursal)
+inner join usuario on (usuario.rut_empleado = empleado.rut_empleado)
+
+--Obtener registro realizado por cada vigilante durante su jornada
+
+select vigilante.nombre, usuario.email, reportes_vigilante.rut_vigilante, reportes_vigilante.detalle_reporte, reportes_vigilante.fecha_reporte, reportes_vigilante.hora_registro, sucursal.direccion AS sucursal
+from vigilante inner join reportes_vigilante on (vigilante.rut_vigilante = reportes_vigilante.rut_vigilante)
+inner join sucursal on (sucursal.id_sucursal = vigilante.id_sucursal)
+inner join usuario on (usuario.rut_vigilante = vigilante.rut_vigilante)
+
+--Obtener registros de empleados por sucursal y banco
+
+select vigilante.nombre, vigilante.edad, banco.nombre, sucursal.direccion
+from vigilante inner join sucursal on (vigilante.id_sucursal = sucursal.id_sucursal)
+join banco on (sucursal.id_banco = banco.id_banco)
+
+--Obtener registros de empleados que no ingresaron fuera del horario laboral
+
+select empleado.nombre, empleado.edad, banco.nombre, sucursal.direccion
+from empleado inner join sucursal on (empleado.id_sucursal = sucursal.id_sucursal)
+join banco on (sucursal.id_banco = banco.id_banco)
